@@ -12,9 +12,10 @@
 // Forward declaration of `HybridNitroCamSpec_cxx` to properly resolve imports.
 namespace NitroCam { class HybridNitroCamSpec_cxx; }
 
+// Forward declaration of `FlashMode` to properly resolve imports.
+namespace margelo::nitro::nitrocam { enum class FlashMode; }
 
-
-
+#include "FlashMode.hpp"
 
 #include "NitroCam-Swift-Cxx-Umbrella.hpp"
 
@@ -57,10 +58,46 @@ namespace margelo::nitro::nitrocam {
     inline void setIsRed(bool isRed) noexcept override {
       _swiftPart.setIsRed(std::forward<decltype(isRed)>(isRed));
     }
+    inline bool getIsFrontCamera() noexcept override {
+      return _swiftPart.isFrontCamera();
+    }
+    inline void setIsFrontCamera(bool isFrontCamera) noexcept override {
+      _swiftPart.setIsFrontCamera(std::forward<decltype(isFrontCamera)>(isFrontCamera));
+    }
+    inline FlashMode getFlash() noexcept override {
+      auto __result = _swiftPart.getFlash();
+      return static_cast<FlashMode>(__result);
+    }
+    inline void setFlash(FlashMode flash) noexcept override {
+      _swiftPart.setFlash(static_cast<int>(flash));
+    }
+    inline double getZoom() noexcept override {
+      return _swiftPart.getZoom();
+    }
+    inline void setZoom(double zoom) noexcept override {
+      _swiftPart.setZoom(std::forward<decltype(zoom)>(zoom));
+    }
 
   public:
     // Methods
-    
+    inline void switchCamera() override {
+      auto __result = _swiftPart.switchCamera();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
+    inline void setFlashMode(FlashMode mode) override {
+      auto __result = _swiftPart.setFlashMode(static_cast<int>(mode));
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
+    inline void setZoomLevel(double level) override {
+      auto __result = _swiftPart.setZoomLevel(std::forward<decltype(level)>(level));
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
 
   private:
     NitroCam::HybridNitroCamSpec_cxx _swiftPart;

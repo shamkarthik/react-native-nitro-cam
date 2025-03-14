@@ -17,6 +17,8 @@ namespace NitroCam { class HybridNitroCamSpec_cxx; }
 
 // Include C++ defined types
 #include "HybridNitroCamSpec.hpp"
+#include <NitroModules/Result.hpp>
+#include <exception>
 #include <memory>
 
 /**
@@ -36,5 +38,14 @@ namespace margelo::nitro::nitrocam::bridge::swift {
   // pragma MARK: std::weak_ptr<margelo::nitro::nitrocam::HybridNitroCamSpec>
   using std__weak_ptr_margelo__nitro__nitrocam__HybridNitroCamSpec_ = std::weak_ptr<margelo::nitro::nitrocam::HybridNitroCamSpec>;
   inline std__weak_ptr_margelo__nitro__nitrocam__HybridNitroCamSpec_ weakify_std__shared_ptr_margelo__nitro__nitrocam__HybridNitroCamSpec_(const std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamSpec>& strong) { return strong; }
+  
+  // pragma MARK: Result<void>
+  using Result_void_ = Result<void>;
+  inline Result_void_ create_Result_void_() {
+    return Result<void>::withValue();
+  }
+  inline Result_void_ create_Result_void_(const std::exception_ptr& error) {
+    return Result<void>::withError(error);
+  }
 
 } // namespace margelo::nitro::nitrocam::bridge::swift

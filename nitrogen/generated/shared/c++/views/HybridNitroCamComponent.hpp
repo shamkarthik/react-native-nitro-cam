@@ -16,6 +16,7 @@
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <react/renderer/components/view/ViewProps.h>
 
+#include "FlashMode.hpp"
 #include <optional>
 #include <functional>
 #include <memory>
@@ -43,6 +44,9 @@ namespace margelo::nitro::nitrocam::views {
 
   public:
     CachedProp<bool> isRed;
+    CachedProp<bool> isFrontCamera;
+    CachedProp<FlashMode> flash;
+    CachedProp<double> zoom;
     CachedProp<std::optional<std::function<void(const std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamSpec>& /* ref */)>>> hybridRef;
 
   private:

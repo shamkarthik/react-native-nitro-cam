@@ -19,21 +19,70 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.facebook.proguard.annotations.DoNotStrip
 import com.facebook.react.uimanager.ThemedReactContext
+import com.margelo.nitro.nitrocam.FlashMode
 import com.margelo.nitro.nitrocam.HybridNitroCamSpec
 
 @Keep
 @DoNotStrip
 class HybridNitroCam(context: ThemedReactContext) : HybridNitroCamSpec() {
+
     private val cameraView: CameraView = CameraView(context)
     override val view = cameraView
 
+    // Property: isRed
     private var _isRed = false
     override var isRed: Boolean
         get() = _isRed
         set(value) {
             _isRed = value
-            // Handle the isRed property as needed
+            // Update view if necessary.
         }
+
+    // Property: isFrontCamera (delegate to CameraView)
+    override var isFrontCamera: Boolean
+        get() = cameraView.isFrontCamera
+        set(value) {
+            if (value != cameraView.isFrontCamera) {
+                cameraView.setCameraType(if (value) 1 else 0)
+            }
+        }
+
+    // Property: flashMode with default value AUTO.
+    private var _flash: FlashMode = FlashMode.AUTO
+    override var flash: FlashMode
+        get() = _flash
+        set(value) {
+            if (value != _flash) {
+                _flash = value
+                cameraView.setFlashMode(value)
+            }
+        }
+
+    // Property: zoomLevel with default value 1.0 (no zoom).
+    private var _zoom: Double = 1.0
+    override var zoom: Double
+        get() = _zoom
+        set(value) {
+            if (value != _zoom) {
+                _zoom = value
+                cameraView.setZoomLevel(value)
+            }
+        }
+
+    // Exposed method to switch cameras.
+    override fun switchCamera() {
+        cameraView.switchCamera()
+    }
+
+    // Exposed method to set flash mode.
+    override fun setFlashMode(mode: FlashMode) {
+        cameraView.setFlashMode(mode)
+    }
+
+    // Exposed method to set zoom level.
+    override fun setZoomLevel(level: Double) {
+        cameraView.setZoomLevel(level)
+    }
 }
 
 class CameraView @JvmOverloads constructor(
@@ -45,7 +94,8 @@ class CameraView @JvmOverloads constructor(
     private val textureView: TextureView = TextureView(context)
     private val cameraManager: CameraManager =
         context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
-    private lateinit var cameraId: String
+
+    private var cameraId: String = ""
     private var cameraDevice: CameraDevice? = null
     private var captureSession: CameraCaptureSession? = null
     private lateinit var previewRequestBuilder: CaptureRequest.Builder
@@ -53,8 +103,13 @@ class CameraView @JvmOverloads constructor(
     private lateinit var backgroundThread: HandlerThread
     private lateinit var backgroundHandler: Handler
 
-    init {
-        textureView.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
+    // Indicates whether the front camera is active.
+    var isFrontCamera: Boolean = false
+        private set
+
+    // Lazy-initialized surface texture listener ensures initialization before use.
+    private val surfaceTextureListener: TextureView.SurfaceTextureListener by lazy {
+        object : TextureView.SurfaceTextureListener {
             override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
                 if (hasCameraPermission()) {
                     initializeCamera()
@@ -62,15 +117,16 @@ class CameraView @JvmOverloads constructor(
                     requestCameraPermission()
                 }
             }
-
             override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {}
             override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean = true
             override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
         }
-        addView(textureView)
     }
 
-    // Rest of your CameraView implementation...
+    init {
+        textureView.surfaceTextureListener = surfaceTextureListener
+        addView(textureView)
+    }
 
     private fun hasCameraPermission(): Boolean {
         return ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) ==
@@ -90,16 +146,10 @@ class CameraView @JvmOverloads constructor(
 
     private fun initializeCamera() {
         startBackgroundThread()
-        cameraId = getCameraId()
+        cameraId = getCameraId(isFrontCamera)
         if (cameraId.isNotEmpty()) {
             try {
-                if (ActivityCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.CAMERA
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    return
-                }
+                if (!hasCameraPermission()) return
                 cameraManager.openCamera(cameraId, stateCallback, backgroundHandler)
             } catch (e: CameraAccessException) {
                 Log.e(TAG, "Error accessing camera", e)
@@ -107,12 +157,16 @@ class CameraView @JvmOverloads constructor(
         }
     }
 
-    private fun getCameraId(): String {
+    private fun getCameraId(isFront: Boolean): String {
         return try {
             cameraManager.cameraIdList.firstOrNull { id ->
                 val characteristics = cameraManager.getCameraCharacteristics(id)
                 val facing = characteristics.get(CameraCharacteristics.LENS_FACING)
-                facing == CameraCharacteristics.LENS_FACING_BACK
+                if (isFront) {
+                    facing == CameraCharacteristics.LENS_FACING_FRONT
+                } else {
+                    facing == CameraCharacteristics.LENS_FACING_BACK
+                }
             } ?: ""
         } catch (e: CameraAccessException) {
             Log.e(TAG, "Error getting camera ID", e)
@@ -125,12 +179,10 @@ class CameraView @JvmOverloads constructor(
             cameraDevice = camera
             createCameraPreviewSession()
         }
-
         override fun onDisconnected(camera: CameraDevice) {
             camera.close()
             cameraDevice = null
         }
-
         override fun onError(camera: CameraDevice, error: Int) {
             camera.close()
             cameraDevice = null
@@ -167,9 +219,8 @@ class CameraView @JvmOverloads constructor(
                             Log.e(TAG, "Error starting camera preview", e)
                         }
                     }
-
                     override fun onConfigureFailed(session: CameraCaptureSession) {
-                        Log.e(TAG, "Failed to configure camera")
+                        Log.e(TAG, "Failed to configure camera preview session")
                     }
                 },
                 backgroundHandler
@@ -198,19 +249,7 @@ class CameraView @JvmOverloads constructor(
         if (textureView.isAvailable) {
             initializeCamera()
         } else {
-            textureView.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
-                override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
-                    if (hasCameraPermission()) {
-                        initializeCamera()
-                    } else {
-                        requestCameraPermission()
-                    }
-                }
-
-                override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {}
-                override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean = true
-                override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
-            }
+            textureView.surfaceTextureListener = surfaceTextureListener
         }
     }
 
@@ -221,17 +260,80 @@ class CameraView @JvmOverloads constructor(
         stopBackgroundThread()
     }
 
+    /**
+     * Sets the camera type: 0 for back, 1 for front.
+     */
+    fun setCameraType(type: Int) {
+        val shouldUseFront = type == 1
+        if (shouldUseFront != isFrontCamera) {
+            isFrontCamera = shouldUseFront
+            restartCamera()
+        }
+    }
+
+    /**
+     * Switches between front and back cameras.
+     */
+    fun switchCamera() {
+        isFrontCamera = !isFrontCamera
+        restartCamera()
+    }
+
+    /**
+     * Restarts the camera preview.
+     */
+    private fun restartCamera() {
+        captureSession?.close()
+        captureSession = null
+        cameraDevice?.close()
+        cameraDevice = null
+        initializeCamera()
+    }
+
+    /**
+     * Sets the flash mode by updating the preview request.
+     */
+    fun setFlashMode(mode: FlashMode) {
+        if (!::previewRequestBuilder.isInitialized) return
+        when (mode) {
+            FlashMode.AUTO -> previewRequestBuilder.set(
+                CaptureRequest.CONTROL_AE_MODE,
+                CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH
+            )
+            FlashMode.ON -> previewRequestBuilder.set(
+                CaptureRequest.FLASH_MODE,
+                CaptureRequest.FLASH_MODE_SINGLE
+            )
+            FlashMode.OFF -> previewRequestBuilder.set(
+                CaptureRequest.CONTROL_AE_MODE,
+                CaptureRequest.CONTROL_AE_MODE_ON
+            )
+        }
+        try {
+            captureSession?.setRepeatingRequest(previewRequestBuilder.build(), null, backgroundHandler)
+        } catch (e: CameraAccessException) {
+            Log.e(TAG, "Error setting flash mode", e)
+        }
+    }
+
+    /**
+     * Sets the zoom level.
+     * (This is a placeholder; in production, compute a proper crop region.)
+     */
+    fun setZoomLevel(level: Double) {
+        Log.d(TAG, "Setting zoom level: $level")
+        // TODO: Compute and apply zoom crop region based on sensor capabilities.
+    }
+
     companion object {
         private const val TAG = "CameraView"
         private const val REQUEST_CAMERA_PERMISSION = 100
 
         private fun Context.getActivity(): Activity? {
-            var context = this
-            while (context is ContextWrapper) {
-                if (context is Activity) {
-                    return context
-                }
-                context = context.baseContext
+            var currentContext = this
+            while (currentContext is ContextWrapper) {
+                if (currentContext is Activity) return currentContext
+                currentContext = currentContext.baseContext
             }
             return null
         }

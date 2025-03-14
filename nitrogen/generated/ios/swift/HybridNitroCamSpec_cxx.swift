@@ -107,8 +107,74 @@ public class HybridNitroCamSpec_cxx {
       self.__implementation.isRed = newValue
     }
   }
+  
+  public final var isFrontCamera: Bool {
+    @inline(__always)
+    get {
+      return self.__implementation.isFrontCamera
+    }
+    @inline(__always)
+    set {
+      self.__implementation.isFrontCamera = newValue
+    }
+  }
+  
+  public final var flash: Int32 {
+    @inline(__always)
+    get {
+      return self.__implementation.flash.rawValue
+    }
+    @inline(__always)
+    set {
+      self.__implementation.flash = margelo.nitro.nitrocam.FlashMode(rawValue: newValue)!
+    }
+  }
+  
+  public final var zoom: Double {
+    @inline(__always)
+    get {
+      return self.__implementation.zoom
+    }
+    @inline(__always)
+    set {
+      self.__implementation.zoom = newValue
+    }
+  }
 
   // Methods
+  @inline(__always)
+  public final func switchCamera() -> bridge.Result_void_ {
+    do {
+      try self.__implementation.switchCamera()
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func setFlashMode(mode: Int32) -> bridge.Result_void_ {
+    do {
+      try self.__implementation.setFlashMode(mode: margelo.nitro.nitrocam.FlashMode(rawValue: mode)!)
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func setZoomLevel(level: Double) -> bridge.Result_void_ {
+    do {
+      try self.__implementation.setZoomLevel(level: level)
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
   public final func getView() -> UnsafeMutableRawPointer {
     return Unmanaged.passRetained(__implementation.view).toOpaque()
   }

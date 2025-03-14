@@ -49,10 +49,18 @@ namespace margelo::nitro::nitrocam {
     // Properties
     bool getIsRed() override;
     void setIsRed(bool isRed) override;
+    bool getIsFrontCamera() override;
+    void setIsFrontCamera(bool isFrontCamera) override;
+    FlashMode getFlash() override;
+    void setFlash(FlashMode flash) override;
+    double getZoom() override;
+    void setZoom(double zoom) override;
 
   public:
     // Methods
-    
+    void switchCamera() override;
+    void setFlashMode(FlashMode mode) override;
+    void setZoomLevel(double level) override;
 
   private:
     friend HybridBase;

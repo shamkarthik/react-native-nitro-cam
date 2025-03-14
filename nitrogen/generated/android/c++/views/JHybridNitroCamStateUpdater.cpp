@@ -32,6 +32,18 @@ void JHybridNitroCamStateUpdater::updateViewProps(jni::alias_ref<jni::JClass> /*
     view->setIsRed(props.isRed.value);
     // TODO: Set isDirty = false
   }
+  if (props.isFrontCamera.isDirty) {
+    view->setIsFrontCamera(props.isFrontCamera.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.flash.isDirty) {
+    view->setFlash(props.flash.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.zoom.isDirty) {
+    view->setZoom(props.zoom.value);
+    // TODO: Set isDirty = false
+  }
 
   // Update hybridRef if it changed
   if (props.hybridRef.isDirty) {

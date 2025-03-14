@@ -5,9 +5,7 @@ import { NitroCam } from 'react-native-nitro-cam';
 function App(): React.JSX.Element {
   return (
     <View style={styles.container}>
-        <NitroCam isRed={
-          false
-        } style={StyleSheet.absoluteFill} />
+        <NitroCam isRed={false} style={StyleSheet.absoluteFill} isFrontCamera={false} flash={'off'} zoom={2} />
     </View>
   );
 }

@@ -12,9 +12,14 @@ import NitroModules
 public protocol HybridNitroCamSpec_protocol: HybridObject, HybridView {
   // Properties
   var isRed: Bool { get set }
+  var isFrontCamera: Bool { get set }
+  var flash: FlashMode { get set }
+  var zoom: Double { get set }
 
   // Methods
-  
+  func switchCamera() throws -> Void
+  func setFlashMode(mode: FlashMode) throws -> Void
+  func setZoomLevel(level: Double) throws -> Void
 }
 
 /// See ``HybridNitroCamSpec``

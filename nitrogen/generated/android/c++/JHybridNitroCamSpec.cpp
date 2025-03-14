@@ -7,9 +7,11 @@
 
 #include "JHybridNitroCamSpec.hpp"
 
+// Forward declaration of `FlashMode` to properly resolve imports.
+namespace margelo::nitro::nitrocam { enum class FlashMode; }
 
-
-
+#include "FlashMode.hpp"
+#include "JFlashMode.hpp"
 
 namespace margelo::nitro::nitrocam {
 
@@ -38,8 +40,46 @@ namespace margelo::nitro::nitrocam {
     static const auto method = javaClassStatic()->getMethod<void(jboolean /* isRed */)>("setRed");
     method(_javaPart, isRed);
   }
+  bool JHybridNitroCamSpec::getIsFrontCamera() {
+    static const auto method = javaClassStatic()->getMethod<jboolean()>("isFrontCamera");
+    auto __result = method(_javaPart);
+    return static_cast<bool>(__result);
+  }
+  void JHybridNitroCamSpec::setIsFrontCamera(bool isFrontCamera) {
+    static const auto method = javaClassStatic()->getMethod<void(jboolean /* isFrontCamera */)>("setFrontCamera");
+    method(_javaPart, isFrontCamera);
+  }
+  FlashMode JHybridNitroCamSpec::getFlash() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFlashMode>()>("getFlash");
+    auto __result = method(_javaPart);
+    return __result->toCpp();
+  }
+  void JHybridNitroCamSpec::setFlash(FlashMode flash) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFlashMode> /* flash */)>("setFlash");
+    method(_javaPart, JFlashMode::fromCpp(flash));
+  }
+  double JHybridNitroCamSpec::getZoom() {
+    static const auto method = javaClassStatic()->getMethod<double()>("getZoom");
+    auto __result = method(_javaPart);
+    return __result;
+  }
+  void JHybridNitroCamSpec::setZoom(double zoom) {
+    static const auto method = javaClassStatic()->getMethod<void(double /* zoom */)>("setZoom");
+    method(_javaPart, zoom);
+  }
 
   // Methods
-  
+  void JHybridNitroCamSpec::switchCamera() {
+    static const auto method = javaClassStatic()->getMethod<void()>("switchCamera");
+    method(_javaPart);
+  }
+  void JHybridNitroCamSpec::setFlashMode(FlashMode mode) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFlashMode> /* mode */)>("setFlashMode");
+    method(_javaPart, JFlashMode::fromCpp(mode));
+  }
+  void JHybridNitroCamSpec::setZoomLevel(double level) {
+    static const auto method = javaClassStatic()->getMethod<void(double /* level */)>("setZoomLevel");
+    method(_javaPart, level);
+  }
 
 } // namespace margelo::nitro::nitrocam

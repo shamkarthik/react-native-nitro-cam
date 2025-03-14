@@ -43,9 +43,37 @@ abstract class HybridNitroCamSpec: HybridView() {
   @set:DoNotStrip
   @set:Keep
   abstract var isRed: Boolean
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var isFrontCamera: Boolean
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var flash: FlashMode
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var zoom: Double
 
   // Methods
+  @DoNotStrip
+  @Keep
+  abstract fun switchCamera(): Unit
   
+  @DoNotStrip
+  @Keep
+  abstract fun setFlashMode(mode: FlashMode): Unit
+  
+  @DoNotStrip
+  @Keep
+  abstract fun setZoomLevel(level: Double): Unit
 
   private external fun initHybrid(): HybridData
 

@@ -8,11 +8,16 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `FlashMode` to properly resolve imports.
+namespace margelo::nitro::nitrocam { enum class FlashMode; }
 // Forward declaration of `HybridNitroCamSpec` to properly resolve imports.
 namespace margelo::nitro::nitrocam { class HybridNitroCamSpec; }
 
 // Include C++ defined types
+#include "FlashMode.hpp"
 #include "HybridNitroCamSpec.hpp"
+#include <NitroModules/Result.hpp>
+#include <exception>
 #include <memory>
 
 // C++ helpers for Swift

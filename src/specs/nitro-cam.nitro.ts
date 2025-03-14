@@ -2,12 +2,26 @@ import type {
   HybridView,
   HybridViewProps,
   HybridViewMethods,
-} from 'react-native-nitro-modules'
+} from 'react-native-nitro-modules';
+
+type FlashMode = 'auto' | 'on' | 'off';
 
 export interface NitroCamProps extends HybridViewProps {
-   isRed: boolean
+  isRed: boolean;
+  isFrontCamera: boolean;
+  flash: FlashMode;
+  zoom: number;
 }
 
-export interface NitroCamMethods extends HybridViewMethods {}
+export interface NitroCamMethods extends HybridViewMethods {
+  switchCamera(): void;
+  setFlashMode(mode: FlashMode): void;
+  setZoomLevel(level: number): void;
+}
 
-export type NitroCam = HybridView<NitroCamProps, NitroCamMethods, { ios: 'swift', android: 'kotlin' }>
+export type NitroCam = HybridView<
+  NitroCamProps,
+  NitroCamMethods,
+  { ios: 'swift'; android: 'kotlin' }
+>;
+

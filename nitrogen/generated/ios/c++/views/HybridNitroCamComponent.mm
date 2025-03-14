@@ -76,6 +76,21 @@ using namespace margelo::nitro::nitrocam::views;
     swiftPart.setIsRed(newViewProps.isRed.value);
     newViewProps.isRed.isDirty = false;
   }
+  // isFrontCamera: boolean
+  if (newViewProps.isFrontCamera.isDirty) {
+    swiftPart.setIsFrontCamera(newViewProps.isFrontCamera.value);
+    newViewProps.isFrontCamera.isDirty = false;
+  }
+  // flash: enum
+  if (newViewProps.flash.isDirty) {
+    swiftPart.setFlash(static_cast<int>(newViewProps.flash.value));
+    newViewProps.flash.isDirty = false;
+  }
+  // zoom: number
+  if (newViewProps.zoom.isDirty) {
+    swiftPart.setZoom(newViewProps.zoom.value);
+    newViewProps.zoom.isDirty = false;
+  }
 
   swiftPart.afterUpdate();
 

@@ -13,9 +13,10 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
+// Forward declaration of `FlashMode` to properly resolve imports.
+namespace margelo::nitro::nitrocam { enum class FlashMode; }
 
-
-
+#include "FlashMode.hpp"
 
 namespace margelo::nitro::nitrocam {
 
@@ -46,10 +47,18 @@ namespace margelo::nitro::nitrocam {
       // Properties
       virtual bool getIsRed() = 0;
       virtual void setIsRed(bool isRed) = 0;
+      virtual bool getIsFrontCamera() = 0;
+      virtual void setIsFrontCamera(bool isFrontCamera) = 0;
+      virtual FlashMode getFlash() = 0;
+      virtual void setFlash(FlashMode flash) = 0;
+      virtual double getZoom() = 0;
+      virtual void setZoom(double zoom) = 0;
 
     public:
       // Methods
-      
+      virtual void switchCamera() = 0;
+      virtual void setFlashMode(FlashMode mode) = 0;
+      virtual void setZoomLevel(double level) = 0;
 
     protected:
       // Hybrid Setup

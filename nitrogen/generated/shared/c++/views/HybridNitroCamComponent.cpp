@@ -35,6 +35,36 @@ namespace margelo::nitro::nitrocam::views {
         throw std::runtime_error(std::string("NitroCam.isRed: ") + exc.what());
       }
     }()),
+    isFrontCamera([&]() -> CachedProp<bool> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("isFrontCamera", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.isFrontCamera;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<bool>::fromRawValue(*runtime, value, sourceProps.isFrontCamera);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroCam.isFrontCamera: ") + exc.what());
+      }
+    }()),
+    flash([&]() -> CachedProp<FlashMode> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("flash", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.flash;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<FlashMode>::fromRawValue(*runtime, value, sourceProps.flash);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroCam.flash: ") + exc.what());
+      }
+    }()),
+    zoom([&]() -> CachedProp<double> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("zoom", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.zoom;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<double>::fromRawValue(*runtime, value, sourceProps.zoom);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroCam.zoom: ") + exc.what());
+      }
+    }()),
     hybridRef([&]() -> CachedProp<std::optional<std::function<void(const std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamSpec>& /* ref */)>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("hybridRef", nullptr, nullptr);
@@ -49,11 +79,17 @@ namespace margelo::nitro::nitrocam::views {
   HybridNitroCamProps::HybridNitroCamProps(const HybridNitroCamProps& other):
     react::ViewProps(),
     isRed(other.isRed),
+    isFrontCamera(other.isFrontCamera),
+    flash(other.flash),
+    zoom(other.zoom),
     hybridRef(other.hybridRef) { }
 
   bool HybridNitroCamProps::filterObjectKeys(const std::string& propName) {
     switch (hashString(propName)) {
       case hashString("isRed"): return true;
+      case hashString("isFrontCamera"): return true;
+      case hashString("flash"): return true;
+      case hashString("zoom"): return true;
       case hashString("hybridRef"): return true;
       default: return false;
     }
