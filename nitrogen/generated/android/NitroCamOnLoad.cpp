@@ -15,6 +15,7 @@
 #include <fbjni/fbjni.h>
 #include <NitroModules/HybridObjectRegistry.hpp>
 
+#include "JHybridNitroCamUtilSpec.hpp"
 #include "JHybridNitroCamSpec.hpp"
 #include "views/JHybridNitroCamStateUpdater.hpp"
 #include <NitroModules/JNISharedPtr.hpp>
@@ -29,6 +30,7 @@ int initialize(JavaVM* vm) {
 
   return facebook::jni::initialize(vm, [] {
     // Register native JNI methods
+    margelo::nitro::nitrocam::JHybridNitroCamUtilSpec::registerNatives();
     margelo::nitro::nitrocam::JHybridNitroCamSpec::registerNatives();
     margelo::nitro::nitrocam::views::JHybridNitroCamStateUpdater::registerNatives();
 
@@ -40,6 +42,15 @@ int initialize(JavaVM* vm) {
         auto instance = object.create();
         auto globalRef = jni::make_global(instance);
         return JNISharedPtr::make_shared_from_jni<JHybridNitroCamSpec>(globalRef);
+      }
+    );
+    HybridObjectRegistry::registerHybridObjectConstructor(
+      "NitroCamUtil",
+      []() -> std::shared_ptr<HybridObject> {
+        static DefaultConstructableObject<JHybridNitroCamUtilSpec::javaobject> object("com/nitrocam/HybridNitroCamUtil");
+        auto instance = object.create();
+        auto globalRef = jni::make_global(instance);
+        return JNISharedPtr::make_shared_from_jni<JHybridNitroCamUtilSpec>(globalRef);
       }
     );
   });

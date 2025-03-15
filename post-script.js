@@ -22,11 +22,11 @@ const androidWorkaround = async () => {
    'HybridNitroCamManager.kt'
  )
 
- const viewManagerStr = await readFile(viewManagerFile, { encoding: 'utf8' })
- await writeFile(viewManagerFile, viewManagerStr.replace('com.margelo.nitro.nitrocam.*', 'com.nitrocam.*'))
+ const viewManagerStr = await readFile(viewManagerFile, { encoding: 'utf8' });
+ await writeFile(viewManagerFile, viewManagerStr.replace(/com\.margelo\.nitro\.nitrocam\.\*/g, 'com.nitrocam.*'));
 
  
- const str = await readFile(androidOnLoadFile, { encoding: 'utf8' })
- await writeFile(androidOnLoadFile, str.replace('margelo/nitro/', ''))
+ const str = await readFile(androidOnLoadFile, { encoding: 'utf8' });
+ await writeFile(androidOnLoadFile, str.replace(/margelo\/nitro\//g, ''));
 }
 androidWorkaround()

@@ -27,9 +27,11 @@ target_sources(
   # Autolinking Setup
   ../nitrogen/generated/android/NitroCamOnLoad.cpp
   # Shared Nitrogen C++ sources
+  ../nitrogen/generated/shared/c++/HybridNitroCamUtilSpec.cpp
   ../nitrogen/generated/shared/c++/HybridNitroCamSpec.cpp
   ../nitrogen/generated/shared/c++/views/HybridNitroCamComponent.cpp
   # Android-specific Nitrogen C++ sources
+  ../nitrogen/generated/android/c++/JHybridNitroCamUtilSpec.cpp
   ../nitrogen/generated/android/c++/JHybridNitroCamSpec.cpp
   ../nitrogen/generated/android/c++/views/JHybridNitroCamStateUpdater.cpp
 )

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { NitroCam } from 'react-native-nitro-cam';
+import { NitroCam,NitroCamUtil } from 'react-native-nitro-cam';
 
 function App(): React.JSX.Element {
   return (
     <View style={styles.container}>
         <NitroCam isRed={false} style={StyleSheet.absoluteFill} isFrontCamera={false} flash={'off'} zoom={2} />
+        <Text>NitroCam {NitroCamUtil.add(2,3)}</Text>
     </View>
   );
 }

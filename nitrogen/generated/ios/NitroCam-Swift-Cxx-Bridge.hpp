@@ -10,13 +10,18 @@
 // Forward declarations of C++ defined types
 // Forward declaration of `HybridNitroCamSpec` to properly resolve imports.
 namespace margelo::nitro::nitrocam { class HybridNitroCamSpec; }
+// Forward declaration of `HybridNitroCamUtilSpec` to properly resolve imports.
+namespace margelo::nitro::nitrocam { class HybridNitroCamUtilSpec; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridNitroCamSpec_cxx` to properly resolve imports.
 namespace NitroCam { class HybridNitroCamSpec_cxx; }
+// Forward declaration of `HybridNitroCamUtilSpec_cxx` to properly resolve imports.
+namespace NitroCam { class HybridNitroCamUtilSpec_cxx; }
 
 // Include C++ defined types
 #include "HybridNitroCamSpec.hpp"
+#include "HybridNitroCamUtilSpec.hpp"
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>
@@ -27,6 +32,27 @@ namespace NitroCam { class HybridNitroCamSpec_cxx; }
  */
 namespace margelo::nitro::nitrocam::bridge::swift {
 
+  // pragma MARK: std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamUtilSpec>
+  /**
+   * Specialized version of `std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamUtilSpec>`.
+   */
+  using std__shared_ptr_margelo__nitro__nitrocam__HybridNitroCamUtilSpec_ = std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamUtilSpec>;
+  std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamUtilSpec> create_std__shared_ptr_margelo__nitro__nitrocam__HybridNitroCamUtilSpec_(void* _Nonnull swiftUnsafePointer);
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__nitrocam__HybridNitroCamUtilSpec_(std__shared_ptr_margelo__nitro__nitrocam__HybridNitroCamUtilSpec_ cppType);
+  
+  // pragma MARK: std::weak_ptr<margelo::nitro::nitrocam::HybridNitroCamUtilSpec>
+  using std__weak_ptr_margelo__nitro__nitrocam__HybridNitroCamUtilSpec_ = std::weak_ptr<margelo::nitro::nitrocam::HybridNitroCamUtilSpec>;
+  inline std__weak_ptr_margelo__nitro__nitrocam__HybridNitroCamUtilSpec_ weakify_std__shared_ptr_margelo__nitro__nitrocam__HybridNitroCamUtilSpec_(const std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamUtilSpec>& strong) { return strong; }
+  
+  // pragma MARK: Result<double>
+  using Result_double_ = Result<double>;
+  inline Result_double_ create_Result_double_(double value) {
+    return Result<double>::withValue(std::move(value));
+  }
+  inline Result_double_ create_Result_double_(const std::exception_ptr& error) {
+    return Result<double>::withError(error);
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamSpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamSpec>`.

@@ -12,10 +12,13 @@
 namespace margelo::nitro::nitrocam { enum class FlashMode; }
 // Forward declaration of `HybridNitroCamSpec` to properly resolve imports.
 namespace margelo::nitro::nitrocam { class HybridNitroCamSpec; }
+// Forward declaration of `HybridNitroCamUtilSpec` to properly resolve imports.
+namespace margelo::nitro::nitrocam { class HybridNitroCamUtilSpec; }
 
 // Include C++ defined types
 #include "FlashMode.hpp"
 #include "HybridNitroCamSpec.hpp"
+#include "HybridNitroCamUtilSpec.hpp"
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>
@@ -31,6 +34,8 @@ namespace margelo::nitro::nitrocam { class HybridNitroCamSpec; }
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridNitroCamSpec_cxx` to properly resolve imports.
 namespace NitroCam { class HybridNitroCamSpec_cxx; }
+// Forward declaration of `HybridNitroCamUtilSpec_cxx` to properly resolve imports.
+namespace NitroCam { class HybridNitroCamUtilSpec_cxx; }
 
 // Include Swift defined types
 #if __has_include("NitroCam-Swift.h")

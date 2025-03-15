@@ -16,6 +16,10 @@
     "NitroCam": {
       "swift": "HybridNitroCam",
       "kotlin": "HybridNitroCam"
+    },
+    "NitroCamUtil": {
+      "swift": "HybridNitroCamUtil",
+      "kotlin": "HybridNitroCamUtil"
     }
   },
   "ignorePaths": [

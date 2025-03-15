@@ -11,6 +11,7 @@
 #import <type_traits>
 
 #include "HybridNitroCamSpecSwift.hpp"
+#include "HybridNitroCamUtilSpecSwift.hpp"
 
 @interface NitroCamAutolinking : NSObject
 @end
@@ -25,6 +26,13 @@
     "NitroCam",
     []() -> std::shared_ptr<HybridObject> {
       std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamSpec> hybridObject = NitroCam::NitroCamAutolinking::createNitroCam();
+      return hybridObject;
+    }
+  );
+  HybridObjectRegistry::registerHybridObjectConstructor(
+    "NitroCamUtil",
+    []() -> std::shared_ptr<HybridObject> {
+      std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamUtilSpec> hybridObject = NitroCam::NitroCamAutolinking::createNitroCamUtil();
       return hybridObject;
     }
   );
