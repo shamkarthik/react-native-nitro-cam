@@ -42,12 +42,6 @@ abstract class HybridNitroCamSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
-  abstract var isRed: Boolean
-  
-  @get:DoNotStrip
-  @get:Keep
-  @set:DoNotStrip
-  @set:Keep
   abstract var isFrontCamera: Boolean
   
   @get:DoNotStrip
@@ -74,6 +68,10 @@ abstract class HybridNitroCamSpec: HybridView() {
   @DoNotStrip
   @Keep
   abstract fun setZoomLevel(level: Double): Unit
+  
+  @DoNotStrip
+  @Keep
+  abstract fun takePhoto(): String
 
   private external fun initHybrid(): HybridData
 

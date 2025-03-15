@@ -43,7 +43,6 @@ namespace margelo::nitro::nitrocam::views {
                         const react::RawProps& rawProps);
 
   public:
-    CachedProp<bool> isRed;
     CachedProp<bool> isFrontCamera;
     CachedProp<FlashMode> flash;
     CachedProp<double> zoom;

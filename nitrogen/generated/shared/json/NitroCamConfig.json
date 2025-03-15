@@ -4,7 +4,6 @@
   "bubblingEventTypes": {},
   "directEventTypes": {},
   "validAttributes": {
-    "isRed": true,
     "isFrontCamera": true,
     "flash": true,
     "zoom": true,

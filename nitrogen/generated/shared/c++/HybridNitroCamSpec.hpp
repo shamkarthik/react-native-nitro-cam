@@ -17,6 +17,7 @@
 namespace margelo::nitro::nitrocam { enum class FlashMode; }
 
 #include "FlashMode.hpp"
+#include <string>
 
 namespace margelo::nitro::nitrocam {
 
@@ -45,8 +46,6 @@ namespace margelo::nitro::nitrocam {
 
     public:
       // Properties
-      virtual bool getIsRed() = 0;
-      virtual void setIsRed(bool isRed) = 0;
       virtual bool getIsFrontCamera() = 0;
       virtual void setIsFrontCamera(bool isFrontCamera) = 0;
       virtual FlashMode getFlash() = 0;
@@ -59,6 +58,7 @@ namespace margelo::nitro::nitrocam {
       virtual void switchCamera() = 0;
       virtual void setFlashMode(FlashMode mode) = 0;
       virtual void setZoomLevel(double level) = 0;
+      virtual std::string takePhoto() = 0;
 
     protected:
       // Hybrid Setup

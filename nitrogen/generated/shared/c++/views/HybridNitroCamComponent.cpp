@@ -25,16 +25,6 @@ namespace margelo::nitro::nitrocam::views {
                                            const HybridNitroCamProps& sourceProps,
                                            const react::RawProps& rawProps):
     react::ViewProps(context, sourceProps, rawProps, filterObjectKeys),
-    isRed([&]() -> CachedProp<bool> {
-      try {
-        const react::RawValue* rawValue = rawProps.at("isRed", nullptr, nullptr);
-        if (rawValue == nullptr) return sourceProps.isRed;
-        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<bool>::fromRawValue(*runtime, value, sourceProps.isRed);
-      } catch (const std::exception& exc) {
-        throw std::runtime_error(std::string("NitroCam.isRed: ") + exc.what());
-      }
-    }()),
     isFrontCamera([&]() -> CachedProp<bool> {
       try {
         const react::RawValue* rawValue = rawProps.at("isFrontCamera", nullptr, nullptr);
@@ -78,7 +68,6 @@ namespace margelo::nitro::nitrocam::views {
 
   HybridNitroCamProps::HybridNitroCamProps(const HybridNitroCamProps& other):
     react::ViewProps(),
-    isRed(other.isRed),
     isFrontCamera(other.isFrontCamera),
     flash(other.flash),
     zoom(other.zoom),
@@ -86,7 +75,6 @@ namespace margelo::nitro::nitrocam::views {
 
   bool HybridNitroCamProps::filterObjectKeys(const std::string& propName) {
     switch (hashString(propName)) {
-      case hashString("isRed"): return true;
       case hashString("isFrontCamera"): return true;
       case hashString("flash"): return true;
       case hashString("zoom"): return true;

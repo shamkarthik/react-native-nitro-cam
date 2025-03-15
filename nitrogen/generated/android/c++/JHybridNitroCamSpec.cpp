@@ -12,6 +12,7 @@ namespace margelo::nitro::nitrocam { enum class FlashMode; }
 
 #include "FlashMode.hpp"
 #include "JFlashMode.hpp"
+#include <string>
 
 namespace margelo::nitro::nitrocam {
 
@@ -31,15 +32,6 @@ namespace margelo::nitro::nitrocam {
   }
 
   // Properties
-  bool JHybridNitroCamSpec::getIsRed() {
-    static const auto method = javaClassStatic()->getMethod<jboolean()>("isRed");
-    auto __result = method(_javaPart);
-    return static_cast<bool>(__result);
-  }
-  void JHybridNitroCamSpec::setIsRed(bool isRed) {
-    static const auto method = javaClassStatic()->getMethod<void(jboolean /* isRed */)>("setRed");
-    method(_javaPart, isRed);
-  }
   bool JHybridNitroCamSpec::getIsFrontCamera() {
     static const auto method = javaClassStatic()->getMethod<jboolean()>("isFrontCamera");
     auto __result = method(_javaPart);
@@ -80,6 +72,11 @@ namespace margelo::nitro::nitrocam {
   void JHybridNitroCamSpec::setZoomLevel(double level) {
     static const auto method = javaClassStatic()->getMethod<void(double /* level */)>("setZoomLevel");
     method(_javaPart, level);
+  }
+  std::string JHybridNitroCamSpec::takePhoto() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("takePhoto");
+    auto __result = method(_javaPart);
+    return __result->toStdString();
   }
 
 } // namespace margelo::nitro::nitrocam

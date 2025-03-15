@@ -97,17 +97,6 @@ public class HybridNitroCamSpec_cxx {
   }
 
   // Properties
-  public final var isRed: Bool {
-    @inline(__always)
-    get {
-      return self.__implementation.isRed
-    }
-    @inline(__always)
-    set {
-      self.__implementation.isRed = newValue
-    }
-  }
-  
   public final var isFrontCamera: Bool {
     @inline(__always)
     get {
@@ -172,6 +161,18 @@ public class HybridNitroCamSpec_cxx {
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
       return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func takePhoto() -> bridge.Result_std__string_ {
+    do {
+      let __result = try self.__implementation.takePhoto()
+      let __resultCpp = std.string(__result)
+      return bridge.create_Result_std__string_(__resultCpp)
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_std__string_(__exceptionPtr)
     }
   }
   

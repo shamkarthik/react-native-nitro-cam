@@ -71,11 +71,6 @@ using namespace margelo::nitro::nitrocam::views;
   // 2. Update each prop individually
   swiftPart.beforeUpdate();
 
-  // isRed: boolean
-  if (newViewProps.isRed.isDirty) {
-    swiftPart.setIsRed(newViewProps.isRed.value);
-    newViewProps.isRed.isDirty = false;
-  }
   // isFrontCamera: boolean
   if (newViewProps.isFrontCamera.isDirty) {
     swiftPart.setIsFrontCamera(newViewProps.isFrontCamera.value);

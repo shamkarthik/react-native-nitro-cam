@@ -28,10 +28,6 @@ void JHybridNitroCamStateUpdater::updateViewProps(jni::alias_ref<jni::JClass> /*
     throw std::runtime_error("HybridNitroCamState's data doesn't contain any props!");
   }
   const HybridNitroCamProps& props = maybeProps.value();
-  if (props.isRed.isDirty) {
-    view->setIsRed(props.isRed.value);
-    // TODO: Set isDirty = false
-  }
   if (props.isFrontCamera.isDirty) {
     view->setIsFrontCamera(props.isFrontCamera.value);
     // TODO: Set isDirty = false

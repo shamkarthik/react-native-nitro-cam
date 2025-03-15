@@ -14,8 +14,6 @@ namespace margelo::nitro::nitrocam {
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
-      prototype.registerHybridGetter("isRed", &HybridNitroCamSpec::getIsRed);
-      prototype.registerHybridSetter("isRed", &HybridNitroCamSpec::setIsRed);
       prototype.registerHybridGetter("isFrontCamera", &HybridNitroCamSpec::getIsFrontCamera);
       prototype.registerHybridSetter("isFrontCamera", &HybridNitroCamSpec::setIsFrontCamera);
       prototype.registerHybridGetter("flash", &HybridNitroCamSpec::getFlash);
@@ -25,6 +23,7 @@ namespace margelo::nitro::nitrocam {
       prototype.registerHybridMethod("switchCamera", &HybridNitroCamSpec::switchCamera);
       prototype.registerHybridMethod("setFlashMode", &HybridNitroCamSpec::setFlashMode);
       prototype.registerHybridMethod("setZoomLevel", &HybridNitroCamSpec::setZoomLevel);
+      prototype.registerHybridMethod("takePhoto", &HybridNitroCamSpec::takePhoto);
     });
   }
 

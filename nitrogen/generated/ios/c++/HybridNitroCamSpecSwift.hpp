@@ -16,6 +16,7 @@ namespace NitroCam { class HybridNitroCamSpec_cxx; }
 namespace margelo::nitro::nitrocam { enum class FlashMode; }
 
 #include "FlashMode.hpp"
+#include <string>
 
 #include "NitroCam-Swift-Cxx-Umbrella.hpp"
 
@@ -52,12 +53,6 @@ namespace margelo::nitro::nitrocam {
 
   public:
     // Properties
-    inline bool getIsRed() noexcept override {
-      return _swiftPart.isRed();
-    }
-    inline void setIsRed(bool isRed) noexcept override {
-      _swiftPart.setIsRed(std::forward<decltype(isRed)>(isRed));
-    }
     inline bool getIsFrontCamera() noexcept override {
       return _swiftPart.isFrontCamera();
     }
@@ -97,6 +92,14 @@ namespace margelo::nitro::nitrocam {
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
+    }
+    inline std::string takePhoto() override {
+      auto __result = _swiftPart.takePhoto();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
     }
 
   private:

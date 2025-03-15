@@ -103,5 +103,14 @@ namespace margelo::nitro::nitrocam::bridge::swift {
   inline Result_void_ create_Result_void_(const std::exception_ptr& error) {
     return Result<void>::withError(error);
   }
+  
+  // pragma MARK: Result<std::string>
+  using Result_std__string_ = Result<std::string>;
+  inline Result_std__string_ create_Result_std__string_(const std::string& value) {
+    return Result<std::string>::withValue(value);
+  }
+  inline Result_std__string_ create_Result_std__string_(const std::exception_ptr& error) {
+    return Result<std::string>::withError(error);
+  }
 
 } // namespace margelo::nitro::nitrocam::bridge::swift
