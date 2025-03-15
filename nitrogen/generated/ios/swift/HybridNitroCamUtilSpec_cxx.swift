@@ -101,14 +101,20 @@ public class HybridNitroCamUtilSpec_cxx {
 
   // Methods
   @inline(__always)
-  public final func add(a: Double, b: Double) -> bridge.Result_double_ {
+  public final func getCameraDevices() -> bridge.Result_std__vector_CameraType__ {
     do {
-      let __result = try self.__implementation.add(a: a, b: b)
-      let __resultCpp = __result
-      return bridge.create_Result_double_(__resultCpp)
+      let __result = try self.__implementation.getCameraDevices()
+      let __resultCpp = { () -> bridge.std__vector_CameraType_ in
+        var __vector = bridge.create_std__vector_CameraType_(__result.count)
+        for __item in __result {
+          __vector.push_back(__item)
+        }
+        return __vector
+      }()
+      return bridge.create_Result_std__vector_CameraType__(__resultCpp)
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_double_(__exceptionPtr)
+      return bridge.create_Result_std__vector_CameraType__(__exceptionPtr)
     }
   }
 }

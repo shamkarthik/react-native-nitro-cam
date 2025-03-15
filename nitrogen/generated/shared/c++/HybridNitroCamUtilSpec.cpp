@@ -14,7 +14,7 @@ namespace margelo::nitro::nitrocam {
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
-      prototype.registerHybridMethod("add", &HybridNitroCamUtilSpec::add);
+      prototype.registerHybridMethod("getCameraDevices", &HybridNitroCamUtilSpec::getCameraDevices);
     });
   }
 

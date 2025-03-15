@@ -14,7 +14,7 @@ public protocol HybridNitroCamUtilSpec_protocol: HybridObject {
   
 
   // Methods
-  func add(a: Double, b: Double) throws -> Double
+  func getCameraDevices() throws -> [CameraType]
 }
 
 /// See ``HybridNitroCamUtilSpec``

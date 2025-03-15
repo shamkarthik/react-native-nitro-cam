@@ -12,9 +12,15 @@
 // Forward declaration of `HybridNitroCamUtilSpec_cxx` to properly resolve imports.
 namespace NitroCam { class HybridNitroCamUtilSpec_cxx; }
 
+// Forward declaration of `CameraType` to properly resolve imports.
+namespace margelo::nitro::nitrocam { struct CameraType; }
+// Forward declaration of `FocalType` to properly resolve imports.
+namespace margelo::nitro::nitrocam { struct FocalType; }
 
-
-
+#include <vector>
+#include "CameraType.hpp"
+#include <string>
+#include "FocalType.hpp"
 
 #include "NitroCam-Swift-Cxx-Umbrella.hpp"
 
@@ -55,8 +61,8 @@ namespace margelo::nitro::nitrocam {
 
   public:
     // Methods
-    inline double add(double a, double b) override {
-      auto __result = _swiftPart.add(std::forward<decltype(a)>(a), std::forward<decltype(b)>(b));
+    inline std::vector<CameraType> getCameraDevices() override {
+      auto __result = _swiftPart.getCameraDevices();
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

@@ -1,12 +1,20 @@
-import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { NitroCam,NitroCamUtil } from 'react-native-nitro-cam';
+import React, {useEffect} from 'react';
+import {Text, View, StyleSheet} from 'react-native';
+import {NitroCam, NitroCamUtil} from 'react-native-nitro-cam';
 
 function App(): React.JSX.Element {
+  const details = NitroCamUtil.getCameraDevices();
+  console.log(details);
+
   return (
     <View style={styles.container}>
-        <NitroCam isRed={false} style={StyleSheet.absoluteFill} isFrontCamera={false} flash={'off'} zoom={2} />
-        <Text>NitroCam {NitroCamUtil.add(2,3)}</Text>
+      <NitroCam
+        isRed={false}
+        style={StyleSheet.absoluteFill}
+        isFrontCamera={false}
+        flash={'off'}
+        zoom={2}
+      />
     </View>
   );
 }
@@ -19,7 +27,8 @@ const styles = StyleSheet.create({
   },
   view: {
     width: 200,
-    height: 200
-  }});
+    height: 200,
+  },
+});
 
 export default App;

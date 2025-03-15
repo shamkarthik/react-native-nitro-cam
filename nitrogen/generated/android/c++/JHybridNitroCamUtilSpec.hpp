@@ -51,7 +51,7 @@ namespace margelo::nitro::nitrocam {
 
   public:
     // Methods
-    double add(double a, double b) override;
+    std::vector<CameraType> getCameraDevices() override;
 
   private:
     friend HybridBase;

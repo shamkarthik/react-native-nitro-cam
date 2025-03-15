@@ -7,9 +7,17 @@
 
 #include "JHybridNitroCamUtilSpec.hpp"
 
+// Forward declaration of `CameraType` to properly resolve imports.
+namespace margelo::nitro::nitrocam { struct CameraType; }
+// Forward declaration of `FocalType` to properly resolve imports.
+namespace margelo::nitro::nitrocam { struct FocalType; }
 
-
-
+#include <vector>
+#include "CameraType.hpp"
+#include "JCameraType.hpp"
+#include <string>
+#include "FocalType.hpp"
+#include "JFocalType.hpp"
 
 namespace margelo::nitro::nitrocam {
 
@@ -32,10 +40,19 @@ namespace margelo::nitro::nitrocam {
   
 
   // Methods
-  double JHybridNitroCamUtilSpec::add(double a, double b) {
-    static const auto method = javaClassStatic()->getMethod<double(double /* a */, double /* b */)>("add");
-    auto __result = method(_javaPart, a, b);
-    return __result;
+  std::vector<CameraType> JHybridNitroCamUtilSpec::getCameraDevices() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JArrayClass<JCameraType>>()>("getCameraDevices");
+    auto __result = method(_javaPart);
+    return [&]() {
+      size_t __size = __result->size();
+      std::vector<CameraType> __vector;
+      __vector.reserve(__size);
+      for (size_t __i = 0; __i < __size; __i++) {
+        auto __element = __result->getElement(__i);
+        __vector.push_back(__element->toCpp());
+      }
+      return __vector;
+    }();
   }
 
 } // namespace margelo::nitro::nitrocam

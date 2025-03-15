@@ -8,20 +8,28 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `CameraType` to properly resolve imports.
+namespace margelo::nitro::nitrocam { struct CameraType; }
 // Forward declaration of `FlashMode` to properly resolve imports.
 namespace margelo::nitro::nitrocam { enum class FlashMode; }
+// Forward declaration of `FocalType` to properly resolve imports.
+namespace margelo::nitro::nitrocam { struct FocalType; }
 // Forward declaration of `HybridNitroCamSpec` to properly resolve imports.
 namespace margelo::nitro::nitrocam { class HybridNitroCamSpec; }
 // Forward declaration of `HybridNitroCamUtilSpec` to properly resolve imports.
 namespace margelo::nitro::nitrocam { class HybridNitroCamUtilSpec; }
 
 // Include C++ defined types
+#include "CameraType.hpp"
 #include "FlashMode.hpp"
+#include "FocalType.hpp"
 #include "HybridNitroCamSpec.hpp"
 #include "HybridNitroCamUtilSpec.hpp"
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>
+#include <string>
+#include <vector>
 
 // C++ helpers for Swift
 #include "NitroCam-Swift-Cxx-Bridge.hpp"

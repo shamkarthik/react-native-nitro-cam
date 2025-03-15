@@ -13,9 +13,11 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
+// Forward declaration of `CameraType` to properly resolve imports.
+namespace margelo::nitro::nitrocam { struct CameraType; }
 
-
-
+#include <vector>
+#include "CameraType.hpp"
 
 namespace margelo::nitro::nitrocam {
 
@@ -48,7 +50,7 @@ namespace margelo::nitro::nitrocam {
 
     public:
       // Methods
-      virtual double add(double a, double b) = 0;
+      virtual std::vector<CameraType> getCameraDevices() = 0;
 
     protected:
       // Hybrid Setup

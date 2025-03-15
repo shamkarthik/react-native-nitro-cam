@@ -8,6 +8,10 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `CameraType` to properly resolve imports.
+namespace margelo::nitro::nitrocam { struct CameraType; }
+// Forward declaration of `FocalType` to properly resolve imports.
+namespace margelo::nitro::nitrocam { struct FocalType; }
 // Forward declaration of `HybridNitroCamSpec` to properly resolve imports.
 namespace margelo::nitro::nitrocam { class HybridNitroCamSpec; }
 // Forward declaration of `HybridNitroCamUtilSpec` to properly resolve imports.
@@ -20,11 +24,15 @@ namespace NitroCam { class HybridNitroCamSpec_cxx; }
 namespace NitroCam { class HybridNitroCamUtilSpec_cxx; }
 
 // Include C++ defined types
+#include "CameraType.hpp"
+#include "FocalType.hpp"
 #include "HybridNitroCamSpec.hpp"
 #include "HybridNitroCamUtilSpec.hpp"
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>
+#include <string>
+#include <vector>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -32,6 +40,28 @@ namespace NitroCam { class HybridNitroCamUtilSpec_cxx; }
  */
 namespace margelo::nitro::nitrocam::bridge::swift {
 
+  // pragma MARK: std::vector<FocalType>
+  /**
+   * Specialized version of `std::vector<FocalType>`.
+   */
+  using std__vector_FocalType_ = std::vector<FocalType>;
+  inline std::vector<FocalType> create_std__vector_FocalType_(size_t size) {
+    std::vector<FocalType> vector;
+    vector.reserve(size);
+    return vector;
+  }
+  
+  // pragma MARK: std::vector<CameraType>
+  /**
+   * Specialized version of `std::vector<CameraType>`.
+   */
+  using std__vector_CameraType_ = std::vector<CameraType>;
+  inline std::vector<CameraType> create_std__vector_CameraType_(size_t size) {
+    std::vector<CameraType> vector;
+    vector.reserve(size);
+    return vector;
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamUtilSpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamUtilSpec>`.
@@ -44,13 +74,13 @@ namespace margelo::nitro::nitrocam::bridge::swift {
   using std__weak_ptr_margelo__nitro__nitrocam__HybridNitroCamUtilSpec_ = std::weak_ptr<margelo::nitro::nitrocam::HybridNitroCamUtilSpec>;
   inline std__weak_ptr_margelo__nitro__nitrocam__HybridNitroCamUtilSpec_ weakify_std__shared_ptr_margelo__nitro__nitrocam__HybridNitroCamUtilSpec_(const std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamUtilSpec>& strong) { return strong; }
   
-  // pragma MARK: Result<double>
-  using Result_double_ = Result<double>;
-  inline Result_double_ create_Result_double_(double value) {
-    return Result<double>::withValue(std::move(value));
+  // pragma MARK: Result<std::vector<CameraType>>
+  using Result_std__vector_CameraType__ = Result<std::vector<CameraType>>;
+  inline Result_std__vector_CameraType__ create_Result_std__vector_CameraType__(const std::vector<CameraType>& value) {
+    return Result<std::vector<CameraType>>::withValue(value);
   }
-  inline Result_double_ create_Result_double_(const std::exception_ptr& error) {
-    return Result<double>::withError(error);
+  inline Result_std__vector_CameraType__ create_Result_std__vector_CameraType__(const std::exception_ptr& error) {
+    return Result<std::vector<CameraType>>::withError(error);
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::nitrocam::HybridNitroCamSpec>

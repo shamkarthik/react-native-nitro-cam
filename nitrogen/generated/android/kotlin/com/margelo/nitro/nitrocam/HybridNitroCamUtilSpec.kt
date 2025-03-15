@@ -42,7 +42,7 @@ abstract class HybridNitroCamUtilSpec: HybridObject() {
   // Methods
   @DoNotStrip
   @Keep
-  abstract fun add(a: Double, b: Double): Double
+  abstract fun getCameraDevices(): Array<CameraType>
 
   private external fun initHybrid(): HybridData
 
