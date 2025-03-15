@@ -1,6 +1,7 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {NitroCam, NitroCamUtil, type NitroCamRef} from 'react-native-nitro-cam';
+import Slider from '@react-native-community/slider'; // Import the Slider
 
 function App(): React.JSX.Element {
   const camRef = useRef<NitroCamRef>(null);
@@ -21,18 +22,40 @@ function App(): React.JSX.Element {
         }}
       />
       <View style={styles.view}>
-        <Text
+        <Text style={styles.button}
           onPress={() => {
             const res = camRef.current?.takePhoto();
             console.log("takePhoto",res);
           }}>
           Take Photo
-        </Text>
+        </Text>        
+        <ZoomSlider camRef={camRef} />
       </View>
-
     </View>
   );
 }
+
+const ZoomSlider = ({camRef}: {camRef: React.MutableRefObject<NitroCamRef | null>}) => {
+  const [zoomValue, setZoomValue] = useState(1);
+  return (
+    <View>
+      <Slider // Use the imported Slider
+        minimumValue={1}
+        maximumValue={10}
+        value={zoomValue}
+        onValueChange={(value: number) => {
+          setZoomValue(value);
+          console.log("setZoomValue",value)
+          camRef.current?.setZoomLevel(value);
+        }}
+        step={0.1}
+      />
+      <Text>Zoom: {zoomValue.toFixed(1)}</Text>
+
+      </View>
+  );
+};
+
 
 const styles = StyleSheet.create({
   container: {
@@ -41,8 +64,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   view: {
-    width: 200,
-    height: 200,
+    width: '100%',
+    height: 100,
+  },
+  button: {
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    padding: 10,
+    margin: 5,
+    textAlign: 'center',
   },
 });
 
