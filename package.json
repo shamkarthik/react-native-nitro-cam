@@ -53,7 +53,7 @@
     "@release-it/bumper": "^7.0.1",
     "@release-it/conventional-changelog": "^10.0.0",
     "@types/jest": "^29.5.12",
-    "@types/react": "^19.0.10",
+    "@types/react": "^19.0.12",
     "nitro-codegen": "0.25.1",
     "react": "19.0.0",
     "react-native": "0.78.0",
